@@ -1,11 +1,11 @@
 class ProductsController < ApplicationController
 
   def index
-     @products = Product.all
-   end
+    @products = Product.all
+  end
 
   def create
-    @product = Product.create(params[:product_attributes])
+    @product = Product.create(product_params)
     redirect_to products_path
   end
 
@@ -17,6 +17,12 @@ class ProductsController < ApplicationController
   def description
     @product = Product.find(params[:id])
     render plain: @product.description
+  end
+
+  private
+
+  def product_params
+    params.require(:product).permit(:name, :price, :inventory, :description)
   end
 
 end
